@@ -127,15 +127,9 @@ elif menu == "Paiements":
 
 elif menu == "Partager sur WhatsApp":
     st.header("Partager l'application")
-    st.write("Après déploiement, colle ici l'URL publique de ton application.")
-    url=st.text_input("URL publique", placeholder="https://...")
-    message="🏋️ FIT_BADOU – CeDT G15\nInscrivez-vous aux séances de Fitness et Renforcement Musculaire :\n"+url
-    if url:
-        wa="https://wa.me/?text="+quote(message)
-        st.markdown(f"**Lien WhatsApp :** [Partager sur WhatsApp]({wa})")
-        st.code(message)
-    else:
-        # --- BOUTON DE CONTACT COACH WHATSAPP ---
+    st.write("Voici le lien de l'application à partager aux étudiants :")
+    st.code("https://fitbadoucedtg15-gqckyubpu9qfkudmtetypm.streamlit.app")
+
 # --- BOUTON DE CONTACT COACH WHATSAPP ---
 MON_NUMERO_WHATSAPP = "221774261843"
 
@@ -146,10 +140,4 @@ st.sidebar.markdown("---")
 st.sidebar.markdown("### 💬 Besoins d'infos / Programme ?")
 st.sidebar.link_button("📲 Écrire au Coach sur WhatsApp", lien_whatsapp)
 
-st.sidebar.markdown("---")
-st.sidebar.markdown("### 💬 Besoins d'infos / Programme ?")
-st.sidebar.link_button("📲 Écrire au Coach sur WhatsApp", lien_whatsapp)
-        st.info("L'URL apparaîtra ici après le déploiement.")
 
-st.sidebar.markdown("---")
-st.sidebar.caption("FIT_BADOU • Coach Badou")
