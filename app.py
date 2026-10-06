@@ -111,7 +111,7 @@ elif menu == "Présences":
                 con.commit(); con.close()
                 st.success("Présence enregistrée.")
 
-  elif menu == "Paiements":
+ elif menu == "Paiements":
         st.header("Paiements")
         
         # --- PROTECTION MOT DE PASSE COACH ---
@@ -138,6 +138,20 @@ elif menu == "Présences":
         else:
             st.info("Aucun étudiant inscrit.")
 
+    elif menu == "Partager sur WhatsApp":
+        st.header("Partager l'application")
+        st.write("Voici le lien de l'application à partager aux étudiants :")
+        st.code("https://fitbadoucedtg15-gqckyubpu9qfkudmtetypm.streamlit.app")
+
+# --- BOUTON DE CONTACT COACH WHATSAPP ---
+MON_NUMERO_WHATSAPP = "221774261843"
+
+message_accueil = "Bonjour Coach Badou ! Je viens de m'inscrire au club FIT_BADOU et je souhaite recevoir mon programme d'entraînement."
+lien_whatsapp = f"https://wa.me/{MON_NUMERO_WHATSAPP}?text={message_accueil.replace(' ', '%20')}"
+
+st.sidebar.markdown("---")
+st.sidebar.markdown("### 💬 Besoins d'infos / Programme ?")
+st.sidebar.link_button("📲 Écrire au Coach sur WhatsApp", lien_whatsapp)
 # --- BOUTON DE CONTACT COACH WHATSAPP ---
 MON_NUMERO_WHATSAPP = "221774261843"
 
