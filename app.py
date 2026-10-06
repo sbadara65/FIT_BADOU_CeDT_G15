@@ -112,17 +112,26 @@ elif menu == "Présences":
                 st.success("Présence enregistrée.")
 
 elif menu == "Paiements":
-    st.header("Paiements")
-    con=db(); students=con.execute("SELECT * FROM students ORDER BY nom,prenom").fetchall(); con.close()
-    if students:
-        labels={f"{s['prenom']} {s['nom']} — {s['telephone']}":s["id"] for s in students}
-        label=st.selectbox("Étudiant", list(labels))
-        montant=st.number_input("Montant (FCFA)", min_value=0, value=5000, step=500)
-        mois=st.text_input("Mois", value=date.today().strftime("%m/%Y"))
-        if st.button("Enregistrer le paiement"):
-            con=db(); con.execute("INSERT INTO payments(student_id,montant,mois,date_paiement) VALUES(?,?,?,?)",
-                                  (labels[label],int(montant),mois,str(date.today())))
-            con.commit(); con.close(); st.success("Paiement enregistré.")
+        st.header("Paiements")
+        
+        # --- PROTECTION MOT DE PASSE COACH ---
+        pwd = st.text_input("Mot de passe Administrateur", type="password")
+        if pwd != st.secrets.get("ADMIN_PASSWORD", "B@mba583"):
+            st.warning("🔒 Accès restreint. Veuillez saisir le mot de passe valide.")
+            st.stop()
+        # -------------------------------------
+
+        con=db(); students=con.execute("SELECT * FROM students ORDER BY nom,prenom").fetchall()
+        if students:
+            labels={f"{s['prenom']} {s['nom']} - {s['telephone']}":s["id"] for s in students}
+            label=st.selectbox("Étudiant", list(labels))
+            montant=st.number_input("Montant (FCFA)", min_value=0, value=5000, step=500)
+            mois=st.text_input("Mois", value=date.today().strftime("%m/%Y"))
+            if st.button("Enregistrer le paiement"):
+                con=db(); con.execute("INSERT INTO payments(student_id,montant,mois,date_paiement) VALUES(?,?,?,?)",
+                                     (labels[label],int(montant),mois,str(date.today())))
+                con.commit(); con.close(); st.success("Paiement enregistré.")
+        else: st.info("Aucun étudiant inscrit.")
     else: st.info("Aucun étudiant inscrit.")
 
 elif menu == "Partager sur WhatsApp":
