@@ -111,7 +111,7 @@ elif menu == "Présences":
                 con.commit(); con.close()
                 st.success("Présence enregistrée.")
 
-elif menu == "Paiements":
+  elif menu == "Paiements":
         st.header("Paiements")
         
         # --- PROTECTION MOT DE PASSE COACH ---
@@ -121,23 +121,32 @@ elif menu == "Paiements":
             st.stop()
         # -------------------------------------
 
-        con=db(); students=con.execute("SELECT * FROM students ORDER BY nom,prenom").fetchall()
+        con = db()
+        students = con.execute("SELECT * FROM students ORDER BY nom,prenom").fetchall()
         if students:
-            labels={f"{s['prenom']} {s['nom']} - {s['telephone']}":s["id"] for s in students}
-            label=st.selectbox("Étudiant", list(labels))
-            montant=st.number_input("Montant (FCFA)", min_value=0, value=5000, step=500)
-            mois=st.text_input("Mois", value=date.today().strftime("%m/%Y"))
+            labels = {f"{s['prenom']} {s['nom']} - {s['telephone']}": s["id"] for s in students}
+            label = st.selectbox("Étudiant", list(labels))
+            montant = st.number_input("Montant (FCFA)", min_value=0, value=5000, step=500)
+            mois = st.text_input("Mois", value=date.today().strftime("%m/%Y"))
             if st.button("Enregistrer le paiement"):
-                con=db(); con.execute("INSERT INTO payments(student_id,montant,mois,date_paiement) VALUES(?,?,?,?)",
-                                     (labels[label],int(montant),mois,str(date.today())))
-                con.commit(); con.close(); st.success("Paiement enregistré.")
-        else: st.info("Aucun étudiant inscrit.")
-    else: st.info("Aucun étudiant inscrit.")
+                con = db()
+                con.execute("INSERT INTO payments(student_id,montant,mois,date_paiement) VALUES(?,?,?,?)",
+                            (labels[label], int(montant), mois, str(date.today())))
+                con.commit()
+                con.close()
+                st.success("Paiement enregistré.")
+        else:
+            st.info("Aucun étudiant inscrit.")
 
-elif menu == "Partager sur WhatsApp":
-    st.header("Partager l'application")
-    st.write("Voici le lien de l'application à partager aux étudiants :")
-    st.code("https://fitbadoucedtg15-gqckyubpu9qfkudmtetypm.streamlit.app")
+# --- BOUTON DE CONTACT COACH WHATSAPP ---
+MON_NUMERO_WHATSAPP = "221774261843"
+
+message_accueil = "Bonjour Coach Badou ! Je viens de m'inscrire au club FIT_BADOU et je souhaite recevoir mon programme d'entraînement."
+lien_whatsapp = f"https://wa.me/{MON_NUMERO_WHATSAPP}?text={message_accueil.replace(' ', '%20')}"
+
+st.sidebar.markdown("---")
+st.sidebar.markdown("### 💬 Besoins d'infos / Programme ?")
+st.sidebar.link_button("📲 Écrire au Coach sur WhatsApp", lien_whatsapp)
 
 # --- BOUTON DE CONTACT COACH WHATSAPP ---
 MON_NUMERO_WHATSAPP = "221774261843"
