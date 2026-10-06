@@ -3,7 +3,7 @@ import sqlite3
 from datetime import date
 
 # Config page
-st.set_page_config(page_title="FIT_BADOU - CeDT G15", page_icon="🏋️️‍♂️")
+st.set_page_config(page_title="FIT_BADOU - CeDT G15", page_icon="🏋️‍♂️")
 
 # Base de données
 def db():
